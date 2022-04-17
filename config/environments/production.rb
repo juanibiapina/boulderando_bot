@@ -65,4 +65,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Domain configuration so telegram-bot is able to configure the webhook
+  routes.default_url_options = { host: "radiant-badlands-16719.herokuapp.com", protocol: "https" }
 end
