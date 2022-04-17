@@ -12,6 +12,9 @@ gem "pg", "~> 1.1"
 # server
 gem "puma", "~> 5.0"
 
+# telegram
+gem "telegram-bot"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end

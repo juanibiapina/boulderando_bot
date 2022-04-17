@@ -76,6 +76,7 @@ GEM
     erubi (1.10.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    httpclient (2.8.3)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
@@ -148,6 +149,10 @@ GEM
     reline (0.3.1)
       io-console (~> 0.5)
     strscan (3.0.1)
+    telegram-bot (0.15.6)
+      actionpack (>= 4.0, < 7.1)
+      activesupport (>= 4.0, < 7.1)
+      httpclient (~> 2.7)
     thor (1.2.1)
     timeout (0.2.0)
     tzinfo (2.0.4)
@@ -166,6 +171,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
+  telegram-bot
 
 RUBY VERSION
    ruby 3.1.1p18
