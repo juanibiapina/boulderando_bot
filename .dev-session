@@ -1,0 +1,9 @@
+new_window "editor"
+run_cmd "$EDITOR"
+
+new_window "postgres"
+run_cmd "docker compose up"
+
+new_window
+
+select_window 1
