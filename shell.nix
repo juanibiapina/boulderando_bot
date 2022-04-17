@@ -9,6 +9,7 @@ in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     pkgs.${ruby_package}
+    postgresql
   ];
   shellHook = ''
     # install gems locally
