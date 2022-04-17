@@ -8,6 +8,7 @@ let
 in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
+    docker
     heroku
     pkgs.${ruby_package}
     postgresql
