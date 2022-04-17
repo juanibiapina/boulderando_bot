@@ -15,6 +15,9 @@ gem "puma", "~> 5.0"
 # telegram
 gem "telegram-bot"
 
+# http
+gem "faraday"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
