@@ -19,4 +19,12 @@ RSpec.describe TelegramWebhooksController, type: :request, telegram_bot: :rails 
       end
     end
   end
+
+  describe "commands" do
+    describe "help" do
+      it "replies with help text" do
+        expect { dispatch_command(:help) }.to make_telegram_request(bot, :sendMessage).with(hash_including(text: I18n.t("help")))
+      end
+    end
+  end
 end

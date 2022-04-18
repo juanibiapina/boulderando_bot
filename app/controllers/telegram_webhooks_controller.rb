@@ -6,11 +6,11 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   rescue_from StandardError, with: :handle_standard_error
 
   def start!(*)
-    respond_with :message, text: help_text
+    respond_with :message, text: I18n.t("help")
   end
 
   def help!(*)
-    respond_with :message, text: help_text
+    respond_with :message, text: I18n.t("help")
   end
 
   def set_user_info!(*words)
@@ -161,15 +161,6 @@ usc_number: #{user.usc_number}
                  else
                    from["first_name"]
                  end
-  end
-
-  def help_text
-    "Commands:
-/help : Shows this help text
-/set_user_info <pattern> : Saves your info for future scheduling
-/delete_user_info: Delete your info
-
-<pattern>: first name, last name, birthday (dd.mm.yyyy), address, postal code, city, phone number, email, urban sports club number"
   end
 
   def call_scheduling_api(user, session, dry_run: false)
