@@ -1,6 +1,8 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
 
+  BOULDERANDO_CHAT_ID = -1001794122712 # currently a test channel
+
   def start!(*)
     respond_with :message, text: help_text
   end
@@ -45,6 +47,64 @@ usc_number: #{user.usc_number}
     respond_with :message, text: "User info deleted"
   end
 
+  def publish!(*words)
+    parts = words.join(" ").split(",").map(&:strip)
+
+    session = {
+      gym_name: parts[0],
+      human_date: parts[1],
+      time: parts[2],
+    }
+
+    bot.send_message(
+      chat_id: BOULDERANDO_CHAT_ID,
+      text: "🧗🧗🧗 Session: #{session[:gym_name]}, #{session[:human_date]}, #{session[:time]}",
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: "Join", callback_data: "saf"
+          }
+        ]]
+      }
+    )
+  end
+
+  def callback_query(data)
+    user = User.find_by(telegram_id: telegram_id)
+
+    if user.nil?
+      bot.answer_callback_query(callback_query_id: payload["id"], text: "I don't know you yet. DM please.")
+    else
+      parts = payload["message"]["text"].split("\n")[0][13..-1].split(",").map(&:strip)
+
+      session = {
+        gym_name: parts[0],
+        human_date: parts[1],
+        time: parts[2],
+      }
+
+      response = call_scheduling_api(user, session)
+
+      if response.success?
+        bot.edit_message_text(
+          message_id: payload["message"]["message_id"],
+          chat_id: BOULDERANDO_CHAT_ID,
+          text: payload["message"]["text"] + "\n#{from["first_name"]}",
+          reply_markup: {
+            inline_keyboard: [[
+              {
+                text: "Join", callback_data: "join"
+              }
+            ]]
+          }
+        )
+        bot.answer_callback_query(callback_query_id: payload["id"], text: "You're in")
+      else
+        bot.answer_callback_query(callback_query_id: payload["id"], text: "Failed to Join :(")
+      end
+    end
+  end
+
   def schedule!(*words)
     user = User.find_by(telegram_id: telegram_id)
 
@@ -59,31 +119,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      dry_run = true
-
-      conn = Faraday.new(
-        url: "https://murmuring-caverns-56233.herokuapp.com",
-        headers: {'Content-Type' => 'application/json'}
-      )
-
-      response = conn.post('/sessions') do |req|
-        req.body = {
-          user: {
-            name: user.name,
-            last_name: user.last_name,
-            birthday: user.birthday,
-            address: user.address,
-            postal_code: user.postal_code,
-            city: user.city,
-            phone_number: user.phone_number,
-            email: user.email,
-            type: "Urban Sports Club",
-            usc_number: user.usc_number,
-          },
-          session: session,
-          dry_run: dry_run,
-        }.to_json
-      end
+      response = call_scheduling_api(user, session)
 
       if response.success?
         respond_with :message, text: response.body
@@ -121,5 +157,31 @@ usc_number: #{user.usc_number}
 /delete_user_info: Delete your info
 
 <pattern>: first name, last name, birthday (dd.mm.yyyy), address, postal code, city, phone number, email, urban sports club number"
+  end
+
+  def call_scheduling_api(user, session)
+    conn = Faraday.new(
+      url: "https://murmuring-caverns-56233.herokuapp.com",
+      headers: {'Content-Type' => 'application/json'}
+    )
+
+    conn.post('/sessions') do |req|
+      req.body = {
+        user: {
+          name: user.name,
+          last_name: user.last_name,
+          birthday: user.birthday,
+          address: user.address,
+          postal_code: user.postal_code,
+          city: user.city,
+          phone_number: user.phone_number,
+          email: user.email,
+          type: "Urban Sports Club",
+          usc_number: user.usc_number,
+        },
+        session: session,
+        dry_run: true,
+      }.to_json
+    end
   end
 end
