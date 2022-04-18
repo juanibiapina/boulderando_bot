@@ -48,25 +48,37 @@ usc_number: #{user.usc_number}
   end
 
   def publish!(*words)
-    parts = words.join(" ").split(",").map(&:strip)
+    user = User.find_by(telegram_id: telegram_id)
 
-    session = {
-      gym_name: parts[0],
-      human_date: parts[1],
-      time: parts[2],
-    }
+    if user.nil?
+      respond_with :message, text: "Sorry #{mention}, I don't know you yet. DM please."
+    else
+      parts = words.join(" ").split(",").map(&:strip)
 
-    bot.send_message(
-      chat_id: BOULDERANDO_CHAT_ID,
-      text: "🧗🧗🧗 Session: #{session[:gym_name]}, #{session[:human_date]}, #{session[:time]}",
-      reply_markup: {
-        inline_keyboard: [[
-          {
-            text: "Join", callback_data: "saf"
-          }
-        ]]
+      session = {
+        gym_name: parts[0],
+        human_date: parts[1],
+        time: parts[2],
       }
-    )
+
+      response = call_scheduling_api(user, session, dry_run: true)
+
+      if response.success?
+        bot.send_message(
+          chat_id: BOULDERANDO_CHAT_ID,
+          text: "🧗🧗🧗 Session: #{session[:gym_name]}, #{session[:human_date]}, #{session[:time]}",
+          reply_markup: {
+            inline_keyboard: [[
+              {
+                text: "Join", callback_data: "saf"
+              }
+            ]]
+          }
+        )
+      else
+        respond_with :message, text: "Failed to book: #{response.body}"
+      end
+    end
   end
 
   def callback_query(data)
@@ -126,7 +138,6 @@ usc_number: #{user.usc_number}
       else
         respond_with :message, text: "Failed to book: #{response.body}"
       end
-
     end
   end
 
@@ -159,7 +170,7 @@ usc_number: #{user.usc_number}
 <pattern>: first name, last name, birthday (dd.mm.yyyy), address, postal code, city, phone number, email, urban sports club number"
   end
 
-  def call_scheduling_api(user, session)
+  def call_scheduling_api(user, session, dry_run: true)
     conn = Faraday.new(
       url: "https://murmuring-caverns-56233.herokuapp.com",
       headers: {'Content-Type' => 'application/json'}
@@ -180,7 +191,7 @@ usc_number: #{user.usc_number}
           usc_number: user.usc_number,
         },
         session: session,
-        dry_run: true,
+        dry_run: dry_run,
       }.to_json
     end
   end
