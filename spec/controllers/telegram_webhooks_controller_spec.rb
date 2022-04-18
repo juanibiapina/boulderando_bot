@@ -11,6 +11,12 @@ RSpec.describe TelegramWebhooksController, type: :request, telegram_bot: :rails 
       it "replies with the error message" do
         expect { dispatch_command(:delete_user_info) }.to make_telegram_request(bot, :sendMessage)
       end
+
+      it "reports to Sentry" do
+        allow(Sentry).to receive(:capture_exception)
+        dispatch_command(:delete_user_info)
+        expect(Sentry).to have_received(:capture_exception)
+      end
     end
   end
 end

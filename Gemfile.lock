@@ -171,6 +171,14 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby2_keywords (0.0.5)
+    sentry-rails (5.2.1)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 5.2.1)
+    sentry-ruby (5.2.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      sentry-ruby-core (= 5.2.1)
+    sentry-ruby-core (5.2.1)
+      concurrent-ruby
     strscan (3.0.1)
     telegram-bot (0.15.6)
       actionpack (>= 4.0, < 7.1)
@@ -196,6 +204,8 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
   rspec-rails (~> 5.0.0)
+  sentry-rails
+  sentry-ruby
   telegram-bot
 
 RUBY VERSION

@@ -199,6 +199,7 @@ usc_number: #{user.usc_number}
   end
 
   def handle_standard_error(e)
+    Sentry.capture_exception(e)
     respond_with :message, text: "Error: #{e}"
   end
 end
