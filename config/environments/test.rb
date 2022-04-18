@@ -51,3 +51,6 @@ Rails.application.configure do
   # Use memory store for bot sessions.
   config.telegram_updates_controller.session_store = :memory_store
 end
+
+Telegram.reset_bots
+Telegram::Bot::ClientStub.stub_all!

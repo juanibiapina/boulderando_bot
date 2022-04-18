@@ -3,6 +3,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   BOULDERANDO_CHAT_ID = -1001696947067
 
+  rescue_from StandardError, with: :handle_standard_error
+
   def start!(*)
     respond_with :message, text: help_text
   end
@@ -194,5 +196,9 @@ usc_number: #{user.usc_number}
         dry_run: dry_run,
       }.to_json
     end
+  end
+
+  def handle_standard_error(e)
+    respond_with :message, text: "Error: #{e}"
   end
 end
