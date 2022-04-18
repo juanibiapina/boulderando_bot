@@ -170,7 +170,7 @@ usc_number: #{user.usc_number}
 <pattern>: first name, last name, birthday (dd.mm.yyyy), address, postal code, city, phone number, email, urban sports club number"
   end
 
-  def call_scheduling_api(user, session, dry_run: true)
+  def call_scheduling_api(user, session, dry_run: false)
     conn = Faraday.new(
       url: "https://murmuring-caverns-56233.herokuapp.com",
       headers: {'Content-Type' => 'application/json'}
