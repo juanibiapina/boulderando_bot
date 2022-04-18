@@ -1,7 +1,7 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
 
-  BOULDERANDO_CHAT_ID = -1001794122712 # currently a test channel
+  BOULDERANDO_CHAT_ID = -1001696947067
 
   def start!(*)
     respond_with :message, text: help_text
