@@ -13,6 +13,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: I18n.t("help")
   end
 
+  def privacy_policy!(*)
+    respond_with :message, text: I18n.t("privacy_policy")
+  end
+
   def set_user_info!(*words)
     parts = words.join(" ").split(",")
 
