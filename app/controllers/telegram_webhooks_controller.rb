@@ -170,7 +170,11 @@ usc_number: #{user.usc_number}
   def call_scheduling_api(user, session, dry_run: false)
     conn = Faraday.new(
       url: "https://murmuring-caverns-56233.herokuapp.com",
-      headers: {'Content-Type' => 'application/json'}
+      headers: {'Content-Type' => 'application/json'},
+      request: {
+        timeout: 60,
+        open_timeout: 60,
+      }
     )
 
     conn.post('/sessions') do |req|
