@@ -91,7 +91,7 @@ usc_number: #{user.usc_number}
     user = User.find_by(telegram_id: telegram_id)
 
     if user.nil?
-      bot.answer_callback_query(callback_query_id: payload["id"], text: "I don't know you yet. DM please.")
+      respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
     else
       parts = payload["message"]["text"].split("\n")[0][13..-1].split(",").map(&:strip)
 
@@ -116,9 +116,9 @@ usc_number: #{user.usc_number}
             ]]
           }
         )
-        bot.answer_callback_query(callback_query_id: payload["id"], text: "You're in")
+        respond_with :message, text: "#{mention} You're in"
       else
-        bot.answer_callback_query(callback_query_id: payload["id"], text: "Failed to Join :(")
+        respond_with :message, text: "#{mention} Failed to join. There may be a problem or no more available spots"
       end
     end
   end
