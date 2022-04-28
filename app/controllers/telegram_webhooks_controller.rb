@@ -17,6 +17,22 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: I18n.t("privacy_policy")
   end
 
+  def get_user_info!
+    user = User.find_by(telegram_id: telegram_id)
+
+    respond_with :message, text: "User info:
+name: #{user.name}
+last_name: #{user.last_name}
+birthday: #{user.birthday.strftime("%d.%m.%Y")}
+address: #{user.address}
+postal_code: #{user.postal_code}
+city: #{user.city}
+phone_number: #{user.phone_number}
+email: #{user.email}
+usc_number: #{user.usc_number}
+"
+  end
+
   def set_user_info!(*words)
     parts = words.join(" ").split(",")
 
