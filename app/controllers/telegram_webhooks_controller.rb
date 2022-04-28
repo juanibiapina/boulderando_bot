@@ -24,9 +24,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 name: #{user.name}
 last_name: #{user.last_name}
 birthday: #{user.birthday.strftime("%d.%m.%Y")}
-address: #{user.address}
-postal_code: #{user.postal_code}
-city: #{user.city}
 phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}
@@ -40,12 +37,9 @@ usc_number: #{user.usc_number}
       user.name = parts[0]
       user.last_name = parts[1]
       user.birthday = Date.parse(parts[2])
-      user.address = parts[3]
-      user.postal_code = parts[4]
-      user.city = parts[5]
-      user.phone_number = parts[6]
-      user.email = parts[7]
-      user.usc_number = parts[8]
+      user.phone_number = parts[3]
+      user.email = parts[4]
+      user.usc_number = parts[5]
     end
 
     user.save!
@@ -54,9 +48,6 @@ usc_number: #{user.usc_number}
 name: #{user.name}
 last_name: #{user.last_name}
 birthday: #{user.birthday.strftime("%d.%m.%Y")}
-address: #{user.address}
-postal_code: #{user.postal_code}
-city: #{user.city}
 phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}

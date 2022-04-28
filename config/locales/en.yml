@@ -13,7 +13,7 @@ en:
     /publish gym_name, day, time slot : Publish a Joinable session to Boulderando chat
     /privacy_policy : Read our Privacy Policy
 
-    <userpattern>: first name, last name, birthday (dd.mm.yyyy), address, postal code, city, phone number, email, urban sports club number
+    <userpattern>: first name, last name, birthday (dd.mm.yyyy), phone number, email, urban sports club number
   privacy_policy: |
     Your personal data is stored in our database and can be deleted at any time. When scheduling specific sessions, your data is transmitted to the corresponding Gym using the Dr. Plano booking system. By scheduling sessions you're automatically agreeing to the Terms and Conditions and Privacy Policy of that Gym.
 
