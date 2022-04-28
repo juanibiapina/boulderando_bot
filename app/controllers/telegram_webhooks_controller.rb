@@ -23,7 +23,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     user = User.find_or_initialize_by(telegram_id: telegram_id).tap do |user|
       user.name = parts[0]
       user.last_name = parts[1]
-      user.birthday = parts[2]
+      user.birthday = Date.parse(parts[2])
       user.address = parts[3]
       user.postal_code = parts[4]
       user.city = parts[5]
@@ -37,7 +37,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: "User info saved:
 name: #{user.name}
 last_name: #{user.last_name}
-birthday: #{user.birthday}
+birthday: #{user.birthday.strftime("%d.%m.%Y")}
 address: #{user.address}
 postal_code: #{user.postal_code}
 city: #{user.city}
@@ -182,7 +182,7 @@ usc_number: #{user.usc_number}
         user: {
           name: user.name,
           last_name: user.last_name,
-          birthday: user.birthday,
+          birthday: user.birthday.strftime("%d.%m.%Y"),
           address: user.address,
           postal_code: user.postal_code,
           city: user.city,
