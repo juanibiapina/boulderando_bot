@@ -3,8 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.2"
 
-# rails
+# web
 gem "rails", "~> 7.0.2", ">= 7.0.2.3"
+gem "grape"
 
 # database
 gem "pg", "~> 1.1"
