@@ -14,6 +14,9 @@ class UsersAPI < Grape::API
       end
     end
     post do
+      User.create!(params[:user])
+
+      nil
     end
   end
 end
