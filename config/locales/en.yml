@@ -8,6 +8,7 @@ en:
 
     /help : Show this help text
     /set_user_info <userpattern> : Save your info for future scheduling
+    /get_user_info : Check your info
     /delete_user_info: Delete your info
     /publish gym_name, day, time slot : Publish a Joinable session to Boulderando chat
     /privacy_policy : Read our Privacy Policy
