@@ -14,7 +14,15 @@ class UsersAPI < Grape::API
       end
     end
     post do
-      User.create!(params[:user])
+      user = User.find_or_initialize_by(email: params[:user][:email])
+
+      user.name = params[:user][:name]
+      user.last_name = params[:user][:last_name]
+      user.birthday = params[:user][:birthday]
+      user.phone_number = params[:user][:phone_number]
+      user.usc_number = params[:user][:usc_number]
+
+      user.save!
 
       nil
     end
