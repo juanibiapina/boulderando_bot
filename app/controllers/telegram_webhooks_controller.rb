@@ -20,7 +20,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   def get_user_info!
     user = User.find_by(telegram_id: telegram_id)
 
-    respond_with :message, text: "User info:
+    if user.present?
+      respond_with :message, text: "User info:
 name: #{user.name}
 last_name: #{user.last_name}
 birthday: #{user.birthday.strftime("%d.%m.%Y")}
@@ -28,6 +29,9 @@ phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}
 "
+    else
+      respond_with :message, text: "No user info saved."
+    end
   end
 
   def set_user_info!(*words)
