@@ -5,15 +5,15 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   rescue_from StandardError, with: :handle_standard_error
 
-  def start!(*)
+  def start!
     respond_with :message, text: I18n.t("help")
   end
 
-  def help!(*)
+  def help!
     respond_with :message, text: I18n.t("help")
   end
 
-  def privacy_policy!(*)
+  def privacy_policy!
     respond_with :message, text: I18n.t("privacy_policy")
   end
 
@@ -58,7 +58,7 @@ usc_number: #{user.usc_number}
 "
   end
 
-  def delete_user_info!(*)
+  def delete_user_info!
     User.find_by(telegram_id: telegram_id).destroy!
 
     respond_with :message, text: "User info deleted"
