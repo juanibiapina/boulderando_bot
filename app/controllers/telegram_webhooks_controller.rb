@@ -14,7 +14,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def help!
-    respond_with :message, text: I18n.t("help")
+    respond_with :message, text: I18n.t("help", registration_link: registration_link)
   end
 
   def privacy_policy!
@@ -220,5 +220,9 @@ usc_number: #{user.usc_number}
   def handle_standard_error(e)
     Sentry.capture_exception(e)
     respond_with :message, text: "Error: #{e}"
+  end
+
+  def registration_link
+    "https://boulderando.vercel.app/user/new?redirect_to=https%3A%2F%2Ft.me%2FBoulderandoBot&telegramId=#{telegram_id}"
   end
 end
