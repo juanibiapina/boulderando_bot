@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require "scheduler"
+
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
 
@@ -148,12 +152,11 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      response = call_scheduling_api(user, session)
-
-      if response.success?
-        respond_with :message, text: response.body
-      else
-        respond_with :message, text: "Failed to book: #{response.body}"
+      begin
+        call_local_scheduling_api(user, session, dry_run: true)
+        respond_with :message, text: "Booked"
+      rescue => e
+        respond_with :message, text: "Error #{e}"
       end
     end
   end
@@ -176,6 +179,19 @@ usc_number: #{user.usc_number}
                  else
                    from["first_name"]
                  end
+  end
+
+  def call_local_scheduling_api(user, session, dry_run: false)
+    # calculate day
+    date = Chronic.parse(session[:human_date])
+    day = date.day.to_s
+    month = date.month
+
+    if session[:gym_name] == "basement"
+      Scheduler.new.schedule_basement(user, day, month, session[:time], submit: !dry_run)
+    elsif gym_name == "boulderklub"
+      Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
+    end
   end
 
   def call_scheduling_api(user, session, dry_run: false)
