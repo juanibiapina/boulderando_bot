@@ -152,12 +152,8 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      begin
-        call_local_scheduling_api(user, session, dry_run: true)
-        respond_with :message, text: "Booked"
-      rescue => e
-        respond_with :message, text: "Error #{e}"
-      end
+      call_local_scheduling_api(user, session, dry_run: true)
+      respond_with :message, text: "Booked"
     end
   end
 
