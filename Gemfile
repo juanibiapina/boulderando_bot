@@ -19,6 +19,13 @@ gem "telegram-bot"
 # http
 gem "faraday"
 
+# date parser
+gem "chronic"
+
+# automation
+gem "capybara"
+gem "selenium-webdriver"
+
 # error reporting
 gem "sentry-ruby"
 gem "sentry-rails"
