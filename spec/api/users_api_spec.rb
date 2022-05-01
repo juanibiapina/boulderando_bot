@@ -10,6 +10,7 @@ RSpec.describe UsersAPI do
         phone_number: "phone_number",
         email: "email",
         usc_number: "usc_number",
+        telegram_id: "telegram_id",
       }
     end
 
@@ -28,6 +29,7 @@ RSpec.describe UsersAPI do
         expect(user.phone_number).to eq("phone_number")
         expect(user.email).to eq("email")
         expect(user.usc_number).to eq("usc_number")
+        expect(user.telegram_id).to eq("telegram_id")
       end
     end
 
@@ -40,6 +42,7 @@ RSpec.describe UsersAPI do
           phone_number: "update phone_number",
           email: "email",
           usc_number: "updated usc_number",
+          telegram_id: "updated telegram_id",
         }
       end
 
@@ -62,6 +65,7 @@ RSpec.describe UsersAPI do
         expect(user.phone_number).to eq(updated_params[:phone_number])
         expect(user.email).to eq(updated_params[:email])
         expect(user.usc_number).to eq(updated_params[:usc_number])
+        expect(user.telegram_id).to eq(updated_params[:telegram_id])
       end
     end
   end

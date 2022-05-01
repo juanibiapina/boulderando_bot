@@ -11,6 +11,7 @@ class UsersAPI < Grape::API
         requires :phone_number, type: String
         requires :email, type: String
         requires :usc_number, type: String
+        requires :telegram_id, type: String
       end
     end
     post do
@@ -21,6 +22,7 @@ class UsersAPI < Grape::API
       user.birthday = params[:user][:birthday]
       user.phone_number = params[:user][:phone_number]
       user.usc_number = params[:user][:usc_number]
+      user.telegram_id = params[:user][:telegram_id]
 
       user.save!
 
