@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require "scheduler"
+require "uri"
 
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
 
   BOULDERANDO_CHAT_ID = -1001696947067
+  BOULDERANDO_WEB_APP_URL = ENV["BOULDERANDO_WEB_APP_URL"]
+  BOULDERANDO_TELEGRAM_BOT_LINK = ENV["BOULDERANDO_TELEGRAM_BOT_LINK"]
 
   rescue_from StandardError, with: :handle_standard_error
 
@@ -60,6 +63,17 @@ phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}
 "
+  end
+
+  def new_user!(*_)
+    create_url = URI::HTTPS.build(
+      host: BOULDERANDO_WEB_APP_URL,
+      path: '/user/new',
+      query:"telegram_id=#{telegram_id}&redirect_to=#{BOULDERANDO_TELEGRAM_BOT_LINK}"
+    )
+
+    respond_with :message, text: "Hello there. To create a new user use the
+link: #{create_url}"
   end
 
   def delete_user_info!
