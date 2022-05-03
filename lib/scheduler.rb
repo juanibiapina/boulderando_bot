@@ -83,7 +83,7 @@ class Scheduler
     find(".drp-course-date-item", text: time).find_button(text: "BUCHEN").click
 
     # fill in user data
-    fill_in("Vorname*", with: username)
+    fill_in("Vorname*", with: user.name)
     fill_in("Nachname*", with: user.last_name)
     fill_in("Geburtsdatum* (TT.MM.JJJJ)", with: user.birthday.strftime("%d.%m.%Y"))
     fill_in("Mobilnummer*", with: user.phone_number)
