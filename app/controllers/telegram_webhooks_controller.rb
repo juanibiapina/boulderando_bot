@@ -185,7 +185,7 @@ usc_number: #{user.usc_number}
 
     if session[:gym_name] == "basement"
       Scheduler.new.schedule_basement(user, day, month, session[:time], submit: !dry_run)
-    elsif gym_name == "boulderklub"
+    elsif session[:gym_name] == "boulderklub"
       Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
     end
   end
