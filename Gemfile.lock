@@ -106,10 +106,6 @@ GEM
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0, >= 1.0.2)
     erubi (1.10.0)
-    faraday (2.2.0)
-      faraday-net_http (~> 2.0)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.0.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     grape (1.6.2)
@@ -258,7 +254,6 @@ DEPENDENCIES
   capybara
   chronic
   debug
-  faraday
   grape
   pg (~> 1.1)
   puma (~> 5.0)

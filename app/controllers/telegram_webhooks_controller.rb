@@ -192,33 +192,6 @@ usc_number: #{user.usc_number}
     true
   end
 
-  def call_scheduling_api(user, session, dry_run: false)
-    conn = Faraday.new(
-      url: "https://murmuring-caverns-56233.herokuapp.com",
-      headers: {'Content-Type' => 'application/json'},
-      request: {
-        timeout: 60,
-        open_timeout: 60,
-      }
-    )
-
-    conn.post('/sessions') do |req|
-      req.body = {
-        user: {
-          name: user.name,
-          last_name: user.last_name,
-          birthday: user.birthday.strftime("%d.%m.%Y"),
-          phone_number: user.phone_number,
-          email: user.email,
-          type: "Urban Sports Club",
-          usc_number: user.usc_number,
-        },
-        session: session,
-        dry_run: dry_run,
-      }.to_json
-    end
-  end
-
   def handle_standard_error(e)
     Sentry.capture_exception(e)
     respond_with :message, text: "Error: #{e}"

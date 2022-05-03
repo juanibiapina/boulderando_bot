@@ -17,9 +17,6 @@ gem "puma", "~> 5.0"
 # telegram
 gem "telegram-bot"
 
-# http
-gem "faraday"
-
 # date parser
 gem "chronic"
 
