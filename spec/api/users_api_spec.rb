@@ -40,9 +40,9 @@ RSpec.describe UsersAPI do
           last_name: "updated last_name",
           birthday: "2022-04-30",
           phone_number: "update phone_number",
-          email: "email",
+          email: "updated email",
           usc_number: "updated usc_number",
-          telegram_id: "updated telegram_id",
+          telegram_id: "telegram_id",
         }
       end
 
