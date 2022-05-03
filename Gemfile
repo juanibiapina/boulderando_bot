@@ -6,6 +6,7 @@ ruby "3.1.2"
 # web
 gem "rails", "~> 7.0.2", ">= 7.0.2.3"
 gem "grape"
+gem "rack-cors"
 
 # database
 gem "pg", "~> 1.1"
