@@ -223,6 +223,6 @@ usc_number: #{user.usc_number}
   end
 
   def registration_link
-    "https://boulderando.vercel.app/user/new?redirect_to=https%3A%2F%2Ft.me%2FBoulderandoBot&telegramId=#{telegram_id}"
+    "https://boulderando.vercel.app/user/new?redirect_to=https%3A%2F%2Ft.me%2FBoulderandoBot&telegram_id=#{telegram_id}"
   end
 end
