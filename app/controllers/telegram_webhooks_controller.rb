@@ -82,7 +82,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      booked = call_local_scheduling_api(user, session, dry_run: true)
+      booked = schedule(user, session, dry_run: true)
 
       if booked
         bot.send_message(
@@ -116,7 +116,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      booked = call_local_scheduling_api(user, session)
+      booked = schedule(user, session)
 
       if booked
         bot.edit_message_text(
@@ -152,7 +152,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      call_local_scheduling_api(user, session, dry_run: true)
+      schedule(user, session, dry_run: true)
       respond_with :message, text: "Booked"
     end
   end
@@ -177,7 +177,7 @@ usc_number: #{user.usc_number}
                  end
   end
 
-  def call_local_scheduling_api(user, session, dry_run: false)
+  def schedule(user, session, dry_run: false)
     # calculate day
     date = Chronic.parse(session[:human_date])
     day = date.day.to_s
