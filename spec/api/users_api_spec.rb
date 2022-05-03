@@ -53,7 +53,6 @@ RSpec.describe UsersAPI do
       it "updates the user" do
         post "/api/users", params: { user: updated_params }
 
-        puts response.body
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)).to be_nil
 
