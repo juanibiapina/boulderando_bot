@@ -2,7 +2,7 @@ new_window "editor"
 run_cmd "$EDITOR"
 
 new_window "postgres"
-run_cmd "docker compose up"
+run_cmd "docker compose up postgres"
 
 new_window
 
