@@ -82,7 +82,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      response = call_local_scheduling_api(user, session, dry_run: true)
+      response = call_scheduling_api(user, session, dry_run: true)
 
       if response.success?
         bot.send_message(
@@ -116,7 +116,7 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      response = call_local_scheduling_api(user, session)
+      response = call_scheduling_api(user, session)
 
       if response.success?
         bot.edit_message_text(
