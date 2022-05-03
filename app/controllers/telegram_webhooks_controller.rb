@@ -82,22 +82,22 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      response = call_scheduling_api(user, session, dry_run: true)
+      booked = call_local_scheduling_api(user, session, dry_run: true)
 
-      if response.success?
+      if booked
         bot.send_message(
           chat_id: BOULDERANDO_CHAT_ID,
           text: "🧗🧗🧗 Session: #{session[:gym_name]}, #{session[:human_date]}, #{session[:time]}",
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "saf"
+                text: "Join", callback_data: "join"
               }
             ]]
           }
         )
       else
-        respond_with :message, text: "Failed to book: #{response.body}"
+        respond_with :message, text: "Failed to join"
       end
     end
   end
@@ -116,9 +116,9 @@ usc_number: #{user.usc_number}
         time: parts[2],
       }
 
-      response = call_scheduling_api(user, session)
+      booked = call_local_scheduling_api(user, session)
 
-      if response.success?
+      if booked
         bot.edit_message_text(
           message_id: payload["message"]["message_id"],
           chat_id: BOULDERANDO_CHAT_ID,
@@ -188,6 +188,8 @@ usc_number: #{user.usc_number}
     elsif session[:gym_name] == "boulderklub"
       Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
     end
+
+    true
   end
 
   def call_scheduling_api(user, session, dry_run: false)
