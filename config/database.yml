@@ -27,7 +27,7 @@ development: &development
 
   username: postgres
   password: password
-  host: localhost
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
   port: 5432
 
   # Minimum log levels, in increasing order:
