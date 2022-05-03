@@ -194,7 +194,7 @@ usc_number: #{user.usc_number}
 
   def handle_standard_error(e)
     Sentry.capture_exception(e)
-    respond_with :message, text: "Error: #{e}"
+    respond_with :message, text: "Sorry, there was an error somewhere."
   end
 
   def registration_link
