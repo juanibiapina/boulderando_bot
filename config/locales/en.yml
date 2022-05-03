@@ -4,7 +4,7 @@ en:
 
     I can help you automatically book bouldering sessions in several Gyms. By using this service you agree with our privacy policy, which you can check by typing /privacy_policy .
 
-    DOES NOT WORK YET This is your personal registration link: %{registration_link}
+    This is your personal registration link: %{registration_link}
 
     Commands:
 
