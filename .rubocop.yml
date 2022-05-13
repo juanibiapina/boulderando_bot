@@ -27,3 +27,9 @@ Style/HashSyntax:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
