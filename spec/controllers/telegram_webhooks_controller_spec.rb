@@ -48,11 +48,11 @@ RSpec.describe TelegramWebhooksController, type: :request, telegram_bot: :rails 
       end
 
       it "sends a message to boulderando chat with session info" do
-        dispatch_command(:publish, "basement, saturday, 10:30 - 12:30")
+        dispatch_command(:publish, "basement, 07.05.2022, 10:30 - 12:30")
 
         expect(bot.requests[:sendMessage].last).to eq(
           chat_id: TelegramWebhooksController::BOULDERANDO_CHAT_ID,
-          text: "🧗🧗🧗 Session: basement, saturday, 10:30 - 12:30",
+          text: "🧗🧗🧗 Session: basement, 07.05.2022, 10:30 - 12:30",
           reply_markup: {
             inline_keyboard: [[
               {
