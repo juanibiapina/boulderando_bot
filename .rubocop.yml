@@ -43,3 +43,6 @@ Style/Documentation:
 
 Naming/AccessorMethodName:
   Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
