@@ -16,3 +16,8 @@ Style/WordArray:
 Style/SymbolArray:
   Enabled: true
   EnforcedStyle: brackets
+
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19_no_mixed_keys
+  EnforcedShorthandSyntax: never

@@ -76,7 +76,7 @@ class Scheduler
     end
 
     # click day
-    find(".drp-calendar-day", :text => /\A#{day}\z/).click # only works if the correct month is already selected
+    find(".drp-calendar-day", text: /\A#{day}\z/).click # only works if the correct month is already selected
 
     # click book button on chosen time
     find(".drp-course-date-item", text: time).find_button(text: "BUCHEN").click
