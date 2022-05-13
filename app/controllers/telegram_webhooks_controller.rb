@@ -28,7 +28,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       respond_with :message, text: "User info:
 name: #{user.name}
 last_name: #{user.last_name}
-birthday: #{user.birthday.strftime("%d.%m.%Y")}
+birthday: #{user.birthday.strftime('%d.%m.%Y')}
 phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}
@@ -55,7 +55,7 @@ usc_number: #{user.usc_number}
     respond_with :message, text: "User info saved:
 name: #{user.name}
 last_name: #{user.last_name}
-birthday: #{user.birthday.strftime("%d.%m.%Y")}
+birthday: #{user.birthday.strftime('%d.%m.%Y')}
 phone_number: #{user.phone_number}
 email: #{user.email}
 usc_number: #{user.usc_number}
@@ -122,7 +122,7 @@ usc_number: #{user.usc_number}
         bot.edit_message_text(
           message_id: payload['message']['message_id'],
           chat_id: BOULDERANDO_CHAT_ID,
-          text: payload['message']['text'] + "\n#{from["first_name"]}",
+          text: payload['message']['text'] + "\n#{from['first_name']}",
           reply_markup: {
             inline_keyboard: [[
               {
@@ -171,7 +171,7 @@ usc_number: #{user.usc_number}
 
   def mention
     @mention ||= if from['username'].present?
-                   "@#{from["username"]}"
+                   "@#{from['username']}"
                  else
                    from['first_name']
                  end
