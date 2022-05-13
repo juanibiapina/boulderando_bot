@@ -33,6 +33,12 @@ RSpec.describe UsersAPI do
         expect(user.usc_number).to eq("usc_number")
         expect(user.telegram_id).to eq("telegram_id")
       end
+
+      it "contains CORS headers" do
+        get '/api/users', params: {user: user_params }, headers: { origin: 'https://boulderando.vercel.app' }
+
+        expect(response.headers["Access-Control-Allow-Origin"]).to eq('https://boulderando.vercel.app')
+      end
     end
 
     context "when user already exists" do
