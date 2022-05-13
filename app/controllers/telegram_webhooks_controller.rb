@@ -183,9 +183,10 @@ usc_number: #{user.usc_number}
     day = date.day.to_s
     month = date.month
 
-    if session[:gym_name] == "basement"
+    case session[:gym_name]
+    when "basement"
       Scheduler.new.schedule_basement(user, day, month, session[:time], submit: !dry_run)
-    elsif session[:gym_name] == "boulderklub"
+    when "boulderklub"
       Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
     end
 
