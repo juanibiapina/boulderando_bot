@@ -91,9 +91,9 @@ usc_number: #{user.usc_number}
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "join"
+                text: "Join", callback_data: "join",
               }
-            ]]
+            ]],
           }
         )
       else
@@ -126,9 +126,9 @@ usc_number: #{user.usc_number}
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "join"
+                text: "Join", callback_data: "join",
               }
-            ]]
+            ]],
           }
         )
         respond_with :message, text: "#{mention} You're in"

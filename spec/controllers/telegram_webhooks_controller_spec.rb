@@ -58,9 +58,9 @@ RSpec.describe TelegramWebhooksController, type: :request, telegram_bot: :rails 
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "join"
+                text: "Join", callback_data: "join",
               }
-            ]]
+            ]],
           }
         )
       end

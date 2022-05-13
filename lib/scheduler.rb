@@ -59,7 +59,7 @@ class Scheduler
     end
 
     {
-      scheduled_time: scheduled_time
+      scheduled_time: scheduled_time,
     }
   end
 
@@ -111,7 +111,7 @@ class Scheduler
     end
 
     {
-      scheduled_time: scheduled_time
+      scheduled_time: scheduled_time,
     }
   end
 end
