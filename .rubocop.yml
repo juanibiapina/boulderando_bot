@@ -2,6 +2,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - db/schema.rb
+    - spec/**/*.rb
 
 Style/StringLiterals:
   Enabled: true
