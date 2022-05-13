@@ -36,3 +36,8 @@ Metrics/AbcSize:
 
 Style/GlobalStdStream:
   Enabled: false
+
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - db/**/*.rb
