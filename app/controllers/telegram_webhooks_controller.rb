@@ -41,14 +41,14 @@ usc_number: #{user.usc_number}
   def set_user_info!(*words)
     parts = words.join(' ').split(',')
 
-    user = User.find_or_initialize_by(telegram_id: telegram_id).tap do |user|
-      user.name = parts[0]
-      user.last_name = parts[1]
-      user.birthday = Date.parse(parts[2])
-      user.phone_number = parts[3]
-      user.email = parts[4]
-      user.usc_number = parts[5]
-    end
+    user = User.find_or_initialize_by(telegram_id: telegram_id)
+
+    user.name = parts[0]
+    user.last_name = parts[1]
+    user.birthday = Date.parse(parts[2])
+    user.phone_number = parts[3]
+    user.email = parts[4]
+    user.usc_number = parts[5]
 
     user.save!
 
