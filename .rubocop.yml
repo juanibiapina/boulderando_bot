@@ -1,5 +1,7 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - db/schema.rb
 
 Style/StringLiterals:
   Enabled: true
