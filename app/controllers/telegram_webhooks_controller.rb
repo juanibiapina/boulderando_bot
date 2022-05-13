@@ -157,7 +157,7 @@ usc_number: #{user.usc_number}
     end
   end
 
-  def action_missing(action, *_args)
+  def action_missing(_action, *_args)
     return unless action_type == :command
 
     respond_with :message, text: "Command not found: #{action_options[:command]}"
