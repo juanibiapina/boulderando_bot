@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - db/schema.rb
     - spec/**/*.rb
+    - vendor/**/*
 
 Style/TrailingCommaInHashLiteral:
   Enabled: true

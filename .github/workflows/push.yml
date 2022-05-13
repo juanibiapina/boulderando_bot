@@ -1,0 +1,34 @@
+name: Ruby
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# cancel previous workflow runs when I new one starts
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run linter
+        run: bin/rubocop
+
+      - name: Start database
+        run: docker compose up -d postgres
+
+      - name: Setup database
+        run: bin/rails db:setup
+
+      - name: Run tests
+        run: bin/rspec
