@@ -37,3 +37,6 @@ Style/Documentation:
   Enabled: true
   Exclude:
     - db/**/*.rb
+
+Naming/AccessorMethodName:
+  Enabled: false
