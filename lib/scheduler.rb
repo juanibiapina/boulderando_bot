@@ -12,7 +12,7 @@ class Scheduler
 
   def schedule_basement(user, day, month, time, submit: false)
     # select URL
-    Capybara.app_host = 'https://basement-boulderstudio.de/'
+    Capybara.app_host = "https://basement-boulderstudio.de/"
 
     # visit website
     visit("/booking")
@@ -23,7 +23,7 @@ class Scheduler
     # advance month if needed
     month_diff = month - Date.today.month
     month_diff.times do
-      find('.drp-course-month-selector-next').click
+      find(".drp-course-month-selector-next").click
     end
 
     # click day
@@ -65,7 +65,7 @@ class Scheduler
 
   def schedule_boulderklub(user, day, month, time, submit: false)
     # select URL
-    Capybara.app_host = 'https://boulderklub.de'
+    Capybara.app_host = "https://boulderklub.de"
 
     # visit website
     visit("/en/booking/adult-slots/")
@@ -73,11 +73,11 @@ class Scheduler
     # advance month if needed
     month_diff = month - Date.today.month
     month_diff.times do
-      find('.drp-course-month-selector-next').click
+      find(".drp-course-month-selector-next").click
     end
 
     # click day
-    find('.drp-calendar-day', :text => /\A#{day}\z/).click # only works if the correct month is already selected
+    find(".drp-calendar-day", :text => /\A#{day}\z/).click # only works if the correct month is already selected
 
     # click book button on chosen time
     find(".drp-course-date-item", text: time).find_button(text: "BUCHEN").click
