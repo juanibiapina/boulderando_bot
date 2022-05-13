@@ -5,7 +5,6 @@ require "capybara/dsl"
 require "chronic"
 
 class Scheduler
-
   include Capybara::DSL
 
   class SafetyCheckError < StandardError; end
