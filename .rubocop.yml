@@ -8,3 +8,7 @@ Style/StringLiterals:
 Style/TrailingCommaInHashLiteral:
   Enabled: true
   EnforcedStyleForMultiline: consistent_comma
+
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: brackets
