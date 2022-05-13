@@ -4,7 +4,7 @@ class UsersAPI < Grape::API
   format :json
 
   resource :users do
-    desc "Create a User."
+    desc 'Create a User.'
     params do
       requires :user, type: Hash do
         requires :name, type: String

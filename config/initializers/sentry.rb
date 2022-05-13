@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Sentry.init do |config|
-  config.dsn = ENV["SENTRY_TOKEN"]
+  config.dsn = ENV['SENTRY_TOKEN']
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
 
   # Set tracesSampleRate to 1.0 to capture 100%
@@ -15,5 +15,5 @@ Sentry.init do |config|
 
   config.environment = Rails.env
 
-  config.enabled_environments = ["production", "development"]
+  config.enabled_environments = ['production', 'development']
 end

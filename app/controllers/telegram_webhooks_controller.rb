@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "scheduler"
+require 'scheduler'
 
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
@@ -10,15 +10,15 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   rescue_from StandardError, with: :handle_standard_error
 
   def start!
-    respond_with :message, text: I18n.t("help")
+    respond_with :message, text: I18n.t('help')
   end
 
   def help!
-    respond_with :message, text: I18n.t("help", registration_link: registration_link)
+    respond_with :message, text: I18n.t('help', registration_link: registration_link)
   end
 
   def privacy_policy!
-    respond_with :message, text: I18n.t("privacy_policy")
+    respond_with :message, text: I18n.t('privacy_policy')
   end
 
   def get_user_info!
@@ -34,12 +34,12 @@ email: #{user.email}
 usc_number: #{user.usc_number}
 "
     else
-      respond_with :message, text: "No user info saved."
+      respond_with :message, text: 'No user info saved.'
     end
   end
 
   def set_user_info!(*words)
-    parts = words.join(" ").split(",")
+    parts = words.join(' ').split(',')
 
     user = User.find_or_initialize_by(telegram_id: telegram_id).tap do |user|
       user.name = parts[0]
@@ -65,7 +65,7 @@ usc_number: #{user.usc_number}
   def delete_user_info!
     User.find_by(telegram_id: telegram_id).destroy!
 
-    respond_with :message, text: "User info deleted"
+    respond_with :message, text: 'User info deleted'
   end
 
   def publish!(*words)
@@ -74,7 +74,7 @@ usc_number: #{user.usc_number}
     if user.nil?
       respond_with :message, text: "Sorry #{mention}, I don't know you yet. DM please."
     else
-      parts = words.join(" ").split(",").map(&:strip)
+      parts = words.join(' ').split(',').map(&:strip)
 
       session = {
         gym_name: parts[0],
@@ -91,13 +91,13 @@ usc_number: #{user.usc_number}
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "join",
+                text: 'Join', callback_data: 'join',
               }
             ]],
           }
         )
       else
-        respond_with :message, text: "Failed to join"
+        respond_with :message, text: 'Failed to join'
       end
     end
   end
@@ -108,7 +108,7 @@ usc_number: #{user.usc_number}
     if user.nil?
       respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
     else
-      parts = payload["message"]["text"].split("\n")[0][13..-1].split(",").map(&:strip)
+      parts = payload['message']['text'].split("\n")[0][13..-1].split(',').map(&:strip)
 
       session = {
         gym_name: parts[0],
@@ -120,13 +120,13 @@ usc_number: #{user.usc_number}
 
       if booked
         bot.edit_message_text(
-          message_id: payload["message"]["message_id"],
+          message_id: payload['message']['message_id'],
           chat_id: BOULDERANDO_CHAT_ID,
-          text: payload["message"]["text"] + "\n#{from["first_name"]}",
+          text: payload['message']['text'] + "\n#{from["first_name"]}",
           reply_markup: {
             inline_keyboard: [[
               {
-                text: "Join", callback_data: "join",
+                text: 'Join', callback_data: 'join',
               }
             ]],
           }
@@ -144,7 +144,7 @@ usc_number: #{user.usc_number}
     if user.nil?
       respond_with :message, text: "Sorry #{mention}, I don't know you yet. DM please."
     else
-      parts = words.join(" ").split(",").map(&:strip)
+      parts = words.join(' ').split(',').map(&:strip)
 
       session = {
         gym_name: parts[0],
@@ -153,7 +153,7 @@ usc_number: #{user.usc_number}
       }
 
       schedule(user, session, dry_run: true)
-      respond_with :message, text: "Booked"
+      respond_with :message, text: 'Booked'
     end
   end
 
@@ -166,14 +166,14 @@ usc_number: #{user.usc_number}
   private
 
   def telegram_id
-    @telegram_id ||= from["id"]
+    @telegram_id ||= from['id']
   end
 
   def mention
-    @mention ||= if from["username"].present?
+    @mention ||= if from['username'].present?
                    "@#{from["username"]}"
                  else
-                   from["first_name"]
+                   from['first_name']
                  end
   end
 
@@ -184,9 +184,9 @@ usc_number: #{user.usc_number}
     month = date.month
 
     case session[:gym_name]
-    when "basement"
+    when 'basement'
       Scheduler.new.schedule_basement(user, day, month, session[:time], submit: !dry_run)
-    when "boulderklub"
+    when 'boulderklub'
       Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
     end
 
@@ -195,7 +195,7 @@ usc_number: #{user.usc_number}
 
   def handle_standard_error(e)
     Sentry.capture_exception(e)
-    respond_with :message, text: "Sorry, there was an error somewhere."
+    respond_with :message, text: 'Sorry, there was an error somewhere.'
   end
 
   def registration_link
