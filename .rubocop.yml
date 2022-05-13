@@ -37,9 +37,7 @@ Style/GlobalStdStream:
   Enabled: false
 
 Style/Documentation:
-  Enabled: true
-  Exclude:
-    - db/**/*.rb
+  Enabled: false
 
 Naming/AccessorMethodName:
   Enabled: false
