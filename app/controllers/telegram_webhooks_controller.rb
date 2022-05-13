@@ -102,13 +102,13 @@ usc_number: #{user.usc_number}
     end
   end
 
-  def callback_query(data)
+  def callback_query(*)
     user = User.find_by(telegram_id: telegram_id)
 
     if user.nil?
       respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
     else
-      parts = payload['message']['text'].split("\n")[0][13..-1].split(',').map(&:strip)
+      parts = payload['message']['text'].split("\n")[0][13..].split(',').map(&:strip)
 
       session = {
         gym_name: parts[0],
