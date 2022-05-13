@@ -46,3 +46,7 @@ Naming/AccessorMethodName:
 
 Style/NumericLiterals:
   Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: true
+  MinNameLength: 1
