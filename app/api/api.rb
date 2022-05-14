@@ -9,4 +9,5 @@ class API < Grape::API
   end
 
   mount UsersAPI
+  mount SessionsAPI
 end
