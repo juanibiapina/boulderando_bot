@@ -49,3 +49,6 @@ Style/NumericLiterals:
 Naming/MethodParameterName:
   Enabled: true
   MinNameLength: 1
+
+Metrics/BlockLength:
+  Enabled: false
