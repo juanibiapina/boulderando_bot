@@ -74,6 +74,23 @@ RSpec.describe UsersAPI do
         expect(user.usc_number).to eq(updated_params[:usc_number])
         expect(user.telegram_id).to eq(updated_params[:telegram_id])
       end
+
+      context "when there's an error" do
+        before do
+          updated_params[:telegram_id] = "new telegram id"
+          updated_params[:email] = User.last.email
+        end
+
+        it "reports to sentry" do
+          allow(Sentry).to receive(:capture_exception)
+
+          post "/api/users", params: { user: updated_params }
+
+          expect(response.status).to eq(500)
+          expect(JSON.parse(response.body)).to include("error" => "Validation failed: Email has already been taken")
+          expect(Sentry).to have_received(:capture_exception)
+        end
+      end
     end
   end
 end
