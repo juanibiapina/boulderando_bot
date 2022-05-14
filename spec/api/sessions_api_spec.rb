@@ -37,7 +37,6 @@ RSpec.describe SessionsAPI do
 
         expect(response.status).to eq(201)
         expect(scheduler_instance).to have_received(:schedule_basement).with(user, "22", 3, time, submit: true)
-        expect(JSON.parse(response.body)).to be_nil
       end
 
       it "creates a session" do
@@ -49,6 +48,19 @@ RSpec.describe SessionsAPI do
         expect(created_session.date).to eq(date)
         expect(created_session.time).to eq(time)
         expect(created_session.user).to eq(user)
+      end
+
+      it "returns session information" do
+        post "/api/sessions", params: { user: user_params, session: session_params }
+
+        expect(JSON.parse(response.body)).to eq(
+          "session" => {
+            "id" => Session.last.id,
+            "gym_name" => gym_name,
+            "date" => date.iso8601,
+            "time" => time,
+          }
+        )
       end
     end
 
@@ -67,10 +79,9 @@ RSpec.describe SessionsAPI do
 
         expect(response.status).to eq(201)
         expect(scheduler_instance).to have_received(:schedule_basement).with(user, "22", 3, time, submit: true)
-        expect(JSON.parse(response.body)).to be_nil
       end
 
-      it "does not create a session" do
+      it "does not create a new session" do
         post "/api/sessions", params: { user: user_params, session: session_params }
 
         expect(Session.count).to eq(1)
@@ -79,6 +90,19 @@ RSpec.describe SessionsAPI do
         expect(created_session.date).to eq(date)
         expect(created_session.time).to eq(time)
         expect(created_session.user).to eq(user)
+      end
+
+      it "returns session information" do
+        post "/api/sessions", params: { user: user_params, session: session_params }
+
+        expect(JSON.parse(response.body)).to eq(
+          "session" => {
+            "id" => Session.last.id,
+            "gym_name" => gym_name,
+            "date" => date.iso8601,
+            "time" => time,
+          }
+        )
       end
     end
   end

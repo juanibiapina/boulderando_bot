@@ -40,7 +40,7 @@ class SessionsAPI < Grape::API
 
       session = Session.find_by(gym_name: gym_name, date: date, time: time)
       if session.nil?
-        Session.create!(
+        session = Session.create!(
           gym_name: gym_name,
           date: date,
           time: time,
@@ -48,7 +48,14 @@ class SessionsAPI < Grape::API
         )
       end
 
-      nil
+      {
+        session: {
+          id: session.id,
+          gym_name: session.gym_name,
+          date: session.date.iso8601,
+          time: session.time,
+        },
+      }
     end
   end
 end
