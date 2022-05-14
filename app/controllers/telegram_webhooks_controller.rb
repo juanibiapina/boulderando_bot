@@ -76,6 +76,13 @@ usc_number: #{user.usc_number}
     else
       session = ::Session.find(data)
 
+      booking = $redis.get("booking:#{user.id}:#{session.id}") # rubocop:disable Style/GlobalVars
+      if booking == 'true'
+        return
+      end
+
+      $redis.set("booking:#{user.id}:#{session.id}", 'true', ex: 60.seconds) # rubocop:disable Style/GlobalVars
+
       booked = schedule(
         user,
         {

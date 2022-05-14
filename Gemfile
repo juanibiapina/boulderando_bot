@@ -12,6 +12,7 @@ gem 'rails', '~> 7.0.2', '>= 7.0.2.3'
 
 # database
 gem 'pg', '~> 1.1'
+gem 'redis'
 
 # server
 gem 'puma', '~> 5.0'
