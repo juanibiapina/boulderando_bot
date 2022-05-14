@@ -74,7 +74,7 @@ usc_number: #{user.usc_number}
     if user.nil?
       respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
     else
-      session = Session.find(data)
+      session = ::Session.find(data)
 
       booked = schedule(
         user,
