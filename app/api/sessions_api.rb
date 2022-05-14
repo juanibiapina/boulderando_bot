@@ -3,6 +3,8 @@
 require 'scheduler'
 
 class SessionsAPI < Grape::API
+  BOULDERANDO_CHAT_ID = -1001696947067
+
   resource :sessions do
     desc 'Create a session.'
     params do
@@ -38,6 +40,17 @@ class SessionsAPI < Grape::API
         Scheduler.new.schedule_boulderklub(user, day, month, time, submit: !dry_run)
       end
 
+      if dry_run
+        return {
+          session: {
+            id: 123,
+            gym_name: gym_name,
+            date: date.to_date.iso8601,
+            time: time,
+          },
+        }
+      end
+
       session = Session.find_by(gym_name: gym_name, date: date, time: time)
       if session.nil?
         session = Session.create!(
@@ -45,6 +58,18 @@ class SessionsAPI < Grape::API
           date: date,
           time: time,
           user: user
+        )
+
+        Telegram.bot.send_message(
+          chat_id: BOULDERANDO_CHAT_ID,
+          text: "🧗🧗🧗 #{session.gym_name.capitalize}, #{session.date.strftime('%A, %B %d')}, #{session.time}",
+          reply_markup: {
+            inline_keyboard: [[
+              {
+                text: 'Join', callback_data: session.id,
+              }
+            ]],
+          }
         )
       end
 
