@@ -52,3 +52,6 @@ Naming/MethodParameterName:
 
 Metrics/BlockLength:
   Enabled: false
+
+Layout/LineLength:
+  Enabled: false
