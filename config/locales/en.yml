@@ -14,10 +14,6 @@ en:
     /set_user_info <userpattern> : Save your info for future scheduling (same as registration form)
     /get_user_info : Check your info
     /delete_user_info: Delete your info
-    /publish gym_name, day, time slot : Publish a Joinable session to Boulderando chat
-      - gym_name is either 'basement' or 'boulderklub'
-      - day can be almost anything, from exact dates to even descriptions of dates
-      - time slot is the time slot exactly how it appears in the corresponding gym website, usually like '18:00 - 20:00'
     /privacy_policy : Read our Privacy Policy
 
     <userpattern>: first name, last name, birthday (dd.mm.yyyy), phone number, email, urban sports club number
