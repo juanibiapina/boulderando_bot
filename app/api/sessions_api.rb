@@ -37,6 +37,18 @@ class SessionsAPI < Grape::API
       when 'boulderklub'
         Scheduler.new.schedule_boulderklub(user, day, month, time, submit: !dry_run)
       end
+
+      session = Session.find_by(gym_name: gym_name, date: date, time: time)
+      if session.nil?
+        Session.create!(
+          gym_name: gym_name,
+          date: date,
+          time: time,
+          user: user
+        )
+      end
+
+      nil
     end
   end
 end
