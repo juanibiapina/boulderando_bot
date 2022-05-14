@@ -6,7 +6,9 @@ en:
 
     This is your personal registration link: %{registration_link}
 
-    After registering with this link, you can simply click 'Join' in any published session in the Boulderando group. Make sure to click only once and check your e-mail to confirm the booking and if there are any problems.
+    After registering with this link, you can simply click 'Join' in any published session in the Boulderando group. Check your e-mail to confirm the booking and if there are any problems.
+
+    If you'd like to create new sessions, visit https://boulderando.vercel.app/sessions. When you schedule using this method, it will automatically publish the session to the group chat so anyone can join.
 
     These are some commands you can type here for more fine grained control:
 
