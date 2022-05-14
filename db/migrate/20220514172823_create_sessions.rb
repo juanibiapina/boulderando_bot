@@ -8,7 +8,7 @@ class CreateSessions < ActiveRecord::Migration[7.0]
       t.string :time
       t.belongs_to :user, null: false, foreign_key: true
 
-      t.index [:gym_name, :date, :time]
+      t.index [:gym_name, :date, :time], unique: true
 
       t.timestamps
     end

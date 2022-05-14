@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_172823) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gym_name", "date", "time"], name: "index_sessions_on_gym_name_and_date_and_time"
+    t.index ["gym_name", "date", "time"], name: "index_sessions_on_gym_name_and_date_and_time", unique: true
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
