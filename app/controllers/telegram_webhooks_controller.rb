@@ -68,21 +68,22 @@ usc_number: #{user.usc_number}
     respond_with :message, text: 'User info deleted'
   end
 
-  def callback_query(*)
+  def callback_query(data)
     user = User.find_by(telegram_id: telegram_id)
 
     if user.nil?
       respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
     else
-      parts = payload['message']['text'].split("\n")[0][13..].split(',').map(&:strip)
+      session = Session.find(data)
 
-      session = {
-        gym_name: parts[0],
-        human_date: parts[1],
-        time: parts[2],
-      }
-
-      booked = schedule(user, session)
+      booked = schedule(
+        user,
+        {
+          gym_name: session.gym_name,
+          human_date: session.date.iso8601,
+          time: session.time,
+        }
+      )
 
       if booked
         bot.edit_message_text(
@@ -92,7 +93,7 @@ usc_number: #{user.usc_number}
           reply_markup: {
             inline_keyboard: [[
               {
-                text: 'Join', callback_data: 'join',
+                text: 'Join', callback_data: session.id,
               }
             ]],
           }

@@ -70,7 +70,7 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
 
           expect(bot.requests[:sendMessage].last).to eq(
             chat_id: SessionsAPI::BOULDERANDO_CHAT_ID,
-            text: "🧗🧗🧗 Basement, Tuesday, March 22, #{time}",
+            text: "🧗🧗🧗 Basement, Tuesday, March 22, #{time}\nParticipants:\n#{user.name}",
             reply_markup: {
               inline_keyboard: [[
                 {
