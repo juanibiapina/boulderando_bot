@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-require "telegram/bot/rspec/integration/rails"
+require 'rails_helper'
+require 'telegram/bot/rspec/integration/rails'
 
 RSpec.describe SessionsAPI, telegram_bot: :rails  do
   let(:scheduler_instance) { double(Scheduler) }
@@ -16,7 +16,7 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
     allow(scheduler_instance).to receive(:schedule_basement)
   end
 
-  context "POST /api/sessions" do
+  context 'POST /api/sessions' do
     let(:user_params) do
       {
         telegram_id: user.telegram_id,
@@ -33,16 +33,16 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
     end
 
     context "when a session doesn't exist yet for this gym, date and time" do
-      context "when dry_run is disabled" do
-        it "calls scheduler to schedule a session" do
-          post "/api/sessions", params: { user: user_params, session: session_params }
+      context 'when dry_run is disabled' do
+        it 'calls scheduler to schedule a session' do
+          post '/api/sessions', params: { user: user_params, session: session_params }
 
           expect(response.status).to eq(201)
-          expect(scheduler_instance).to have_received(:schedule_basement).with(user, "22", 3, time, submit: true)
+          expect(scheduler_instance).to have_received(:schedule_basement).with(user, '22', 3, time, submit: true)
         end
 
-        it "creates a session" do
-          post "/api/sessions", params: { user: user_params, session: session_params }
+        it 'creates a session' do
+          post '/api/sessions', params: { user: user_params, session: session_params }
 
           expect(Session.count).to eq(1)
           created_session = Session.last
@@ -52,21 +52,21 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
           expect(created_session.user).to eq(user)
         end
 
-        it "returns session information" do
-          post "/api/sessions", params: { user: user_params, session: session_params }
+        it 'returns session information' do
+          post '/api/sessions', params: { user: user_params, session: session_params }
 
           expect(JSON.parse(response.body)).to eq(
-            "session" => {
-              "id" => Session.last.id,
-              "gym_name" => gym_name,
-              "date" => date.iso8601,
-              "time" => time,
+            'session' => {
+              'id' => Session.last.id,
+              'gym_name' => gym_name,
+              'date' => date.iso8601,
+              'time' => time,
             }
           )
         end
 
-        it "publishes the session to telegram chat" do
-          post "/api/sessions", params: { user: user_params, session: session_params }
+        it 'publishes the session to telegram chat' do
+          post '/api/sessions', params: { user: user_params, session: session_params }
 
           expect(bot.requests[:sendMessage].last).to eq(
             chat_id: SessionsAPI::BOULDERANDO_CHAT_ID,
@@ -74,7 +74,7 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
             reply_markup: {
               inline_keyboard: [[
                 {
-                  text: "Join", callback_data: Session.last.id,
+                  text: 'Join', callback_data: Session.last.id,
                 }
               ]],
             }
@@ -82,42 +82,42 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
         end
       end
 
-      context "when dry_run is enabled" do
-        it "calls scheduler to schedule a session" do
-          post "/api/sessions", params: { user: user_params, session: session_params, dry_run: true }
+      context 'when dry_run is enabled' do
+        it 'calls scheduler to schedule a session' do
+          post '/api/sessions', params: { user: user_params, session: session_params, dry_run: true }
 
           expect(response.status).to eq(201)
-          expect(scheduler_instance).to have_received(:schedule_basement).with(user, "22", 3, time, submit: false)
+          expect(scheduler_instance).to have_received(:schedule_basement).with(user, '22', 3, time, submit: false)
         end
 
-        it "does not create a session" do
-          post "/api/sessions", params: { user: user_params, session: session_params, dry_run: true }
+        it 'does not create a session' do
+          post '/api/sessions', params: { user: user_params, session: session_params, dry_run: true }
 
           expect(Session.count).to eq(0)
         end
 
-        it "returns session information" do
-          post "/api/sessions", params: { user: user_params, session: session_params, dry_run: true }
+        it 'returns session information' do
+          post '/api/sessions', params: { user: user_params, session: session_params, dry_run: true }
 
           expect(JSON.parse(response.body)).to eq(
-            "session" => {
-              "id" => 123,
-              "gym_name" => gym_name,
-              "date" => date.iso8601,
-              "time" => time,
+            'session' => {
+              'id' => 123,
+              'gym_name' => gym_name,
+              'date' => date.iso8601,
+              'time' => time,
             }
           )
         end
 
-        it "does not publish the session on the telegram chat" do
-          post "/api/sessions", params: { user: user_params, session: session_params, dry_run: true }
+        it 'does not publish the session on the telegram chat' do
+          post '/api/sessions', params: { user: user_params, session: session_params, dry_run: true }
 
           expect(bot.requests[:sendMessage].count).to eq(0)
         end
       end
     end
 
-    context "when a session already exists for this gym, date and time" do
+    context 'when a session already exists for this gym, date and time' do
       before do
         Session.create!(
           gym_name: gym_name,
@@ -127,15 +127,15 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
         )
       end
 
-      it "calls scheduler to schedule a session" do
-        post "/api/sessions", params: { user: user_params, session: session_params }
+      it 'calls scheduler to schedule a session' do
+        post '/api/sessions', params: { user: user_params, session: session_params }
 
         expect(response.status).to eq(201)
-        expect(scheduler_instance).to have_received(:schedule_basement).with(user, "22", 3, time, submit: true)
+        expect(scheduler_instance).to have_received(:schedule_basement).with(user, '22', 3, time, submit: true)
       end
 
-      it "does not create a new session" do
-        post "/api/sessions", params: { user: user_params, session: session_params }
+      it 'does not create a new session' do
+        post '/api/sessions', params: { user: user_params, session: session_params }
 
         expect(Session.count).to eq(1)
         created_session = Session.last
@@ -145,21 +145,21 @@ RSpec.describe SessionsAPI, telegram_bot: :rails  do
         expect(created_session.user).to eq(user)
       end
 
-      it "returns session information" do
-        post "/api/sessions", params: { user: user_params, session: session_params }
+      it 'returns session information' do
+        post '/api/sessions', params: { user: user_params, session: session_params }
 
         expect(JSON.parse(response.body)).to eq(
-          "session" => {
-            "id" => Session.last.id,
-            "gym_name" => gym_name,
-            "date" => date.iso8601,
-            "time" => time,
+          'session' => {
+            'id' => Session.last.id,
+            'gym_name' => gym_name,
+            'date' => date.iso8601,
+            'time' => time,
           }
         )
       end
 
-      it "does not publish the session on the telegram chat" do
-        post "/api/sessions", params: { user: user_params, session: session_params }
+      it 'does not publish the session on the telegram chat' do
+        post '/api/sessions', params: { user: user_params, session: session_params }
 
         expect(bot.requests[:sendMessage].count).to eq(0)
       end

@@ -8,6 +8,6 @@ FactoryBot.define do
     phone_number { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     usc_number { Faker::Number.number(digits: 10) }
-    telegram_id { "123" } # seems to be the default when testing with telegram-bot helpers
+    telegram_id { '123' } # seems to be the default when testing with telegram-bot helpers
   end
 end
