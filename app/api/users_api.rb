@@ -17,8 +17,9 @@ class UsersAPI < Grape::API
       end
     end
     post do
-      user = User.find_or_initialize_by(telegram_id: params[:user][:telegram_id])
+      user = User.find_or_initialize_by(email: params[:user][:email])
 
+      user.telegram_id = params[:user][:telegram_id]
       user.name = params[:user][:name]
       user.last_name = params[:user][:last_name]
       user.birthday = params[:user][:birthday]

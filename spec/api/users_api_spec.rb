@@ -48,9 +48,9 @@ RSpec.describe UsersAPI do
           last_name: "updated last_name",
           birthday: "2022-04-30",
           phone_number: "update phone_number",
-          email: "updated email",
+          email: "email", # unchanged
           usc_number: "updated usc_number",
-          telegram_id: "telegram_id",
+          telegram_id: "updated telegram_id",
         }
       end
 
@@ -77,8 +77,8 @@ RSpec.describe UsersAPI do
 
       context "when there's an error" do
         before do
-          updated_params[:telegram_id] = "new telegram id"
-          updated_params[:email] = User.last.email
+          updated_params[:telegram_id] = User.last.telegram_id
+          updated_params[:email] = "new email"
         end
 
         it "reports to sentry" do
@@ -87,7 +87,7 @@ RSpec.describe UsersAPI do
           post "/api/users", params: { user: updated_params }
 
           expect(response.status).to eq(500)
-          expect(JSON.parse(response.body)).to include("error" => "Validation failed: Email has already been taken")
+          expect(JSON.parse(response.body)).to include("error" => "Validation failed: Telegram has already been taken")
           expect(Sentry).to have_received(:capture_exception)
         end
       end
