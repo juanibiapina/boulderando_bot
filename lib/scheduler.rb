@@ -20,7 +20,7 @@ class Scheduler
     find('.drp-course-list-item-regulaere-slots').click
 
     # advance month if needed
-    month_diff = month - Date.today.month
+    month_diff = month - Time.zone.today.month
     month_diff.times do
       find('.drp-course-month-selector-next').click
     end
@@ -70,7 +70,7 @@ class Scheduler
     visit('/en/booking/adult-slots/')
 
     # advance month if needed
-    month_diff = month - Date.today.month
+    month_diff = month - Time.zone.today.month
     month_diff.times do
       find('.drp-course-month-selector-next').click
     end

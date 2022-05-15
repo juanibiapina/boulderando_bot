@@ -72,5 +72,5 @@ Rails.application.configure do
   routes.default_url_options = { host: 'radiant-badlands-16719.herokuapp.com', protocol: 'https' }
 
   # Configure session store for telegram bot.
-  config.telegram_updates_controller.session_store = :file_store, Rails.root.join('tmp', 'session_store')
+  config.telegram_updates_controller.session_store = :file_store, Rails.root.join('tmp/session_store')
 end
