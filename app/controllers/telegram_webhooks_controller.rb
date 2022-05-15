@@ -112,25 +112,6 @@ usc_number: #{user.usc_number}
     end
   end
 
-  def schedule!(*words)
-    user = User.find_by(telegram_id: telegram_id)
-
-    if user.nil?
-      respond_with :message, text: "Sorry #{mention}, I don't know you yet. DM please."
-    else
-      parts = words.join(' ').split(',').map(&:strip)
-
-      session = {
-        gym_name: parts[0],
-        human_date: parts[1],
-        time: parts[2],
-      }
-
-      schedule(user, session, dry_run: true)
-      respond_with :message, text: 'Booked'
-    end
-  end
-
   def action_missing(_action, *_args)
     return unless action_type == :command
 
