@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'telegram/bot/rspec/integration/rails'
 
-RSpec.describe SessionsAPI, telegram_bot: :rails  do
+RSpec.describe SessionsAPI, telegram_bot: :rails do
   let(:scheduler_instance) { double(Scheduler) }
   let(:user) { create(:user) }
   let(:gym_name) { 'basement' }

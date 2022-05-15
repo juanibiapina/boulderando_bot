@@ -35,7 +35,7 @@ RSpec.describe UsersAPI do
       end
 
       it 'contains CORS headers' do
-        get '/api/users', params: {user: user_params }, headers: { origin: 'https://boulderando.vercel.app' }
+        get '/api/users', params: { user: user_params }, headers: { origin: 'https://boulderando.vercel.app' }
 
         expect(response.headers['Access-Control-Allow-Origin']).to eq('https://boulderando.vercel.app')
       end

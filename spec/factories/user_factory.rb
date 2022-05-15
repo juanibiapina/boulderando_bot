@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    birthday { Date.today }
+    birthday { Time.zone.today }
     phone_number { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     usc_number { Faker::Number.number(digits: 10) }
