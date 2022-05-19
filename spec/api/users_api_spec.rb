@@ -77,8 +77,7 @@ RSpec.describe UsersAPI do
 
       context "when there's an error" do
         before do
-          updated_params[:telegram_id] = User.last.telegram_id
-          updated_params[:email] = 'new email'
+          allow(User).to receive(:find_or_initialize_by).and_raise('Error')
         end
 
         it 'reports to sentry' do
@@ -87,7 +86,7 @@ RSpec.describe UsersAPI do
           post '/api/users', params: { user: updated_params }
 
           expect(response.status).to eq(500)
-          expect(JSON.parse(response.body)).to include('error' => 'Validation failed: Telegram has already been taken')
+          expect(JSON.parse(response.body)).to include('error' => 'Error')
           expect(Sentry).to have_received(:capture_exception)
         end
       end
