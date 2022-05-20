@@ -36,6 +36,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 5.0.0'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails'
+  gem 'rubocop-base', require: false, github: 'juanibiapina/rubocop-base'
+  gem 'rubocop-rails', require: false
 end

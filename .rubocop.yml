@@ -1,59 +1,12 @@
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  rubocop-base:
+    - config/rubocop.yml
+
 require:
   - rubocop-rails
 
 AllCops:
-  NewCops: enable
   Exclude:
     - db/schema.rb
-    - vendor/**/*
-
-Style/TrailingCommaInHashLiteral:
-  Enabled: true
-  EnforcedStyleForMultiline: consistent_comma
-
-Style/WordArray:
-  Enabled: true
-  EnforcedStyle: brackets
-
-Style/SymbolArray:
-  Enabled: true
-  EnforcedStyle: brackets
-
-Style/HashSyntax:
-  Enabled: true
-  EnforcedStyle: ruby19_no_mixed_keys
-  EnforcedShorthandSyntax: never
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
-
-Style/GlobalStdStream:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Naming/AccessorMethodName:
-  Enabled: false
-
-Style/NumericLiterals:
-  Enabled: false
-
-Naming/MethodParameterName:
-  Enabled: true
-  MinNameLength: 1
-
-Metrics/BlockLength:
-  Enabled: false
-
-Layout/LineLength:
-  Enabled: false

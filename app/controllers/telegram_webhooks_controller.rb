@@ -14,7 +14,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def help!
-    respond_with :message, text: I18n.t('help', registration_link: registration_link)
+    respond_with :message, text: I18n.t('help', registration_link:)
   end
 
   def privacy_policy!
@@ -22,7 +22,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def get_user_info!
-    user = User.find_by(telegram_id: telegram_id)
+    user = User.find_by(telegram_id:)
 
     if user.present?
       respond_with :message, text: "User info:
@@ -41,7 +41,7 @@ usc_number: #{user.usc_number}
   def set_user_info!(*words)
     parts = words.join(' ').split(',')
 
-    user = User.find_or_initialize_by(telegram_id: telegram_id)
+    user = User.find_or_initialize_by(telegram_id:)
 
     user.name = parts[0]
     user.last_name = parts[1]
@@ -63,13 +63,13 @@ usc_number: #{user.usc_number}
   end
 
   def delete_user_info!
-    User.find_by(telegram_id: telegram_id).destroy!
+    User.find_by(telegram_id:).destroy!
 
     respond_with :message, text: 'User info deleted'
   end
 
   def callback_query(data)
-    user = User.find_by(telegram_id: telegram_id)
+    user = User.find_by(telegram_id:)
 
     if user.nil?
       respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."

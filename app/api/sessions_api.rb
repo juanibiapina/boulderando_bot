@@ -44,20 +44,20 @@ class SessionsAPI < Grape::API
         return {
           session: {
             id: 123,
-            gym_name: gym_name,
+            gym_name:,
             date: date.to_date.iso8601,
-            time: time,
+            time:,
           },
         }
       end
 
-      session = Session.find_by(gym_name: gym_name, date: date, time: time)
+      session = Session.find_by(gym_name:, date:, time:)
       if session.nil?
         session = Session.create!(
-          gym_name: gym_name,
-          date: date,
-          time: time,
-          user: user
+          gym_name:,
+          date:,
+          time:,
+          user:
         )
 
         Telegram.bot.send_message(

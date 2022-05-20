@@ -26,9 +26,9 @@ RSpec.describe SessionsAPI, telegram_bot: :rails do
 
     let(:session_params) do
       {
-        gym_name: gym_name,
-        human_date: human_date,
-        time: time,
+        gym_name:,
+        human_date:,
+        time:,
       }
     end
 
@@ -120,10 +120,10 @@ RSpec.describe SessionsAPI, telegram_bot: :rails do
     context 'when a session already exists for this gym, date and time' do
       before do
         Session.create!(
-          gym_name: gym_name,
-          date: date,
-          time: time,
-          user: user
+          gym_name:,
+          date:,
+          time:,
+          user:
         )
       end
 
