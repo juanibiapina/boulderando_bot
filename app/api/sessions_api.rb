@@ -62,7 +62,11 @@ class SessionsAPI < Grape::API
 
         Telegram.bot.send_message(
           chat_id: BOULDERANDO_CHAT_ID,
-          text: "🧗🧗🧗 #{session.gym_name.capitalize}, #{session.date.strftime('%A, %B %d')}, #{session.time}\nParticipants:\n#{user.name}",
+          text: I18n.t('session',
+                       gym_name: session.gym_name.capitalize,
+                       date: session.date.strftime('%A, %B %d'),
+                       time: session.time,
+                       users: user.name),
           reply_markup: {
             inline_keyboard: [[
               {

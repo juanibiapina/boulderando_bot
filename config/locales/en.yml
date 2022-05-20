@@ -23,3 +23,7 @@ en:
     Your personal data is stored in our database and can be deleted at any time. When scheduling specific sessions, your data is transmitted to the corresponding Gym using the Dr. Plano booking system. By scheduling sessions you're automatically agreeing to the Terms and Conditions and Privacy Policy of that Gym.
 
     Your data is not used for any other purposes. If this service is decomissioned, all data will be deleted.
+  session: |
+    🧗🧗🧗 %{gym_name}, %{date}, %{time}
+    Participants:
+    %{users}
