@@ -3,6 +3,7 @@ en:
     Commands:
 
     /help : Show this help text
+    /schedule <gym>, <date>, <time> : Schedule a session. Date can be any text, like: Next saturday
   session: |
     🧗🧗🧗 %{gym_name}, %{date}, %{time}
     Participants:
