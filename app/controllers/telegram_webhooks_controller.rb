@@ -17,48 +17,47 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: I18n.t('help')
   end
 
-  def callback_query(data)
-    user = User.find_by(telegram_id:)
+  def schedule!(*words)
+    parts = words.join(' ').split(',').map(&:strip)
 
-    if user.nil?
-      respond_with :message, text: "Hi #{mention}, I don't know you yet. DM please."
-    else
-      session = ::Session.find(data)
+    gym_name = parts[0]
+    human_date = parts[1]
+    time = parts[2]
 
-      booking = $redis.get("booking:#{user.id}:#{session.id}") # rubocop:disable Style/GlobalVars
-      if booking == 'true'
-        return
-      end
+    date = Chronic.parse(human_date)
 
-      $redis.set("booking:#{user.id}:#{session.id}", 'true', ex: 60.seconds) # rubocop:disable Style/GlobalVars
-
-      booked = schedule(
-        user,
-        {
-          gym_name: session.gym_name,
-          human_date: session.date.iso8601,
-          time: session.time,
-        }
-      )
-
-      if booked
-        bot.edit_message_text(
-          message_id: payload['message']['message_id'],
-          chat_id: BOULDERANDO_CHAT_ID,
-          text: payload['message']['text'] + "\n#{from['first_name']}",
-          reply_markup: {
-            inline_keyboard: [[
-              {
-                text: 'Join', callback_data: session.id,
-              }
-            ]],
+    Telegram.bot.send_message(
+      chat_id: BOULDERANDO_CHAT_ID,
+      text: I18n.t('session',
+                   gym_name: gym_name.capitalize,
+                   date: date.strftime('%A, %B %d'),
+                   time:),
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: 'Join', callback_data: 'unused',
           }
-        )
-        respond_with :message, text: "#{mention} You're in"
-      else
-        respond_with :message, text: "#{mention} Failed to join. There may be a problem or no more available spots"
-      end
-    end
+        ]],
+      }
+    )
+
+    respond_with :message, text: 'Session created in Boulderando Chat'
+  end
+
+  def callback_query(_data)
+    bot.edit_message_text(
+      message_id: payload['message']['message_id'],
+      chat_id: BOULDERANDO_CHAT_ID,
+      text: payload['message']['text'] + "\n#{from['first_name']}",
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: 'Join', callback_data: 'unused',
+          }
+        ]],
+      }
+    )
+    respond_with :message, text: "#{mention} You're in"
   end
 
   def action_missing(_action, *_args)
@@ -79,22 +78,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
                  else
                    from['first_name']
                  end
-  end
-
-  def schedule(user, session, dry_run: false)
-    # calculate day
-    date = Chronic.parse(session[:human_date])
-    day = date.day.to_s
-    month = date.month
-
-    case session[:gym_name]
-    when 'basement'
-      Scheduler.new.schedule_basement(user, day, month, session[:time], submit: !dry_run)
-    when 'boulderklub'
-      Scheduler.new.schedule_boulderklub(user, day, month, session[:time], submit: !dry_run)
-    end
-
-    true
   end
 
   def handle_standard_error(e)
