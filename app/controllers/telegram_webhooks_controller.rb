@@ -14,54 +14,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def help!
-    respond_with :message, text: I18n.t('help', registration_link:)
-  end
-
-  def get_user_info!
-    user = User.find_by(telegram_id:)
-
-    if user.present?
-      respond_with :message, text: "User info:
-name: #{user.name}
-last_name: #{user.last_name}
-birthday: #{user.birthday.strftime('%d.%m.%Y')}
-phone_number: #{user.phone_number}
-email: #{user.email}
-usc_number: #{user.usc_number}
-"
-    else
-      respond_with :message, text: 'No user info saved.'
-    end
-  end
-
-  def set_user_info!(*words)
-    parts = words.join(' ').split(',')
-
-    user = User.find_or_initialize_by(telegram_id:)
-
-    user.name = parts[0]
-    user.last_name = parts[1]
-    user.birthday = Date.parse(parts[2])
-    user.phone_number = parts[3]
-    user.email = parts[4]
-    user.usc_number = parts[5]
-
-    user.save!
-
-    respond_with :message, text: "User info saved:
-name: #{user.name}
-last_name: #{user.last_name}
-birthday: #{user.birthday.strftime('%d.%m.%Y')}
-phone_number: #{user.phone_number}
-email: #{user.email}
-usc_number: #{user.usc_number}
-"
-  end
-
-  def delete_user_info!
-    User.find_by(telegram_id:).destroy!
-
-    respond_with :message, text: 'User info deleted'
+    respond_with :message, text: I18n.t('help')
   end
 
   def callback_query(data)
@@ -147,9 +100,5 @@ usc_number: #{user.usc_number}
   def handle_standard_error(e)
     Sentry.capture_exception(e)
     respond_with :message, text: 'Sorry, there was an error somewhere.'
-  end
-
-  def registration_link
-    "https://boulderando.vercel.app/user/new?redirect_to=https%3A%2F%2Ft.me%2FBoulderandoBot&telegram_id=#{telegram_id}"
   end
 end
