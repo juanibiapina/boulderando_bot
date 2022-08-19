@@ -31,7 +31,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       text: I18n.t('session',
                    gym_name: gym_name.capitalize,
                    date: date.strftime('%A, %B %d'),
-                   time:),
+                   time:,
+                   users: nil),
       reply_markup: {
         inline_keyboard: [[
           {
