@@ -17,10 +17,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: I18n.t('help', registration_link:)
   end
 
-  def privacy_policy!
-    respond_with :message, text: I18n.t('privacy_policy')
-  end
-
   def get_user_info!
     user = User.find_by(telegram_id:)
 

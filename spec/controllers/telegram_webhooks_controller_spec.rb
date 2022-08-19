@@ -28,14 +28,5 @@ RSpec.describe TelegramWebhooksController, type: :request, telegram_bot: :rails 
         expect { dispatch_command(:help) }.to make_telegram_request(bot, :sendMessage)
       end
     end
-
-    describe 'privacy_policy' do
-      it 'replies with privacy policy text' do
-        expect do
-          dispatch_command(:privacy_policy)
-        end.to make_telegram_request(bot,
-                                     :sendMessage).with(hash_including(text: I18n.t('privacy_policy')))
-      end
-    end
   end
 end

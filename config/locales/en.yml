@@ -2,7 +2,7 @@ en:
   help: |
     Hi,
 
-    I can help you automatically book bouldering sessions in several Gyms. By using this service you agree with our privacy policy, which you can check by typing /privacy_policy .
+    I can help you automatically book bouldering sessions in several Gyms.
 
     This is your personal registration link: %{registration_link}
 
@@ -16,13 +16,8 @@ en:
     /set_user_info <userpattern> : Save your info for future scheduling (same as registration form)
     /get_user_info : Check your info
     /delete_user_info: Delete your info
-    /privacy_policy : Read our Privacy Policy
 
     <userpattern>: first name, last name, birthday (dd.mm.yyyy), phone number, email, urban sports club number
-  privacy_policy: |
-    Your personal data is stored in our database and can be deleted at any time. When scheduling specific sessions, your data is transmitted to the corresponding Gym using the Dr. Plano booking system. By scheduling sessions you're automatically agreeing to the Terms and Conditions and Privacy Policy of that Gym.
-
-    Your data is not used for any other purposes. If this service is decomissioned, all data will be deleted.
   session: |
     🧗🧗🧗 %{gym_name}, %{date}, %{time}
     Participants:
