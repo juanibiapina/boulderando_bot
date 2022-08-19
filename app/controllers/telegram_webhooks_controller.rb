@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'scheduler'
-
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::Session
 

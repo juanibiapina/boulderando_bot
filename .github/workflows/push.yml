@@ -24,11 +24,5 @@ jobs:
       - name: Run linter
         run: bin/rubocop
 
-      - name: Start database
-        run: docker compose up -d postgres
-
-      - name: Setup database
-        run: bin/rails db:setup
-
       - name: Run tests
         run: bin/rspec

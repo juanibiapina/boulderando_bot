@@ -11,7 +11,6 @@ pkgs.mkShell {
     docker
     heroku
     pkgs.${ruby_package}
-    postgresql
   ];
   shellHook = ''
     # install gems locally

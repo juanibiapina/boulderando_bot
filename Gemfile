@@ -9,9 +9,6 @@ ruby '3.1.2'
 gem 'rack-cors'
 gem 'rails', '~> 7.0.2', '>= 7.0.2.3'
 
-# database
-gem 'pg', '~> 1.1'
-
 # server
 gem 'puma', '~> 5.0'
 
