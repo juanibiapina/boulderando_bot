@@ -56,7 +56,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
         ]],
       }
     )
-    respond_with :message, text: "#{mention} You're in"
+    answer_callback_query("You're in")
   end
 
   def action_missing(_action, *_args)
