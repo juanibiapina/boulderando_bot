@@ -81,6 +81,5 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def handle_standard_error(e)
     Sentry.capture_exception(e)
-    respond_with :message, text: 'Sorry, there was an error somewhere.'
   end
 end
